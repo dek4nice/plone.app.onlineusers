@@ -1,0 +1,34 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    i18n_domain="plone.app.onlineusers">
+
+    <browser:viewlet
+        name="plone.app.onlineusers.init"
+        manager="plone.app.layout.viewlets.interfaces.IHtmlHead"
+        class=".viewlets.OnlineUsersViewlet"
+        permission="zope2.View"
+    /> 
+
+    <browser:page
+        name="onlineusers-controlpanel"
+        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+        class=".controlpanel.ControlPanel"
+        template="controlpanel.pt"
+        permission="cmf.ManagePortal"
+        />
+
+    <browser:resource
+        name="plone.app.onlineusers.listing.gif"
+        image="image_listing.gif"
+        />
+    <browser:resource
+        name="plone.app.onlineusers.icon.gif"
+        image="image_icon.gif"
+        />
+    <browser:resource
+        name="plone.app.onlineusers.tile.gif"
+        image="image_tile.gif"
+        />
+
+</configure>

@@ -1,0 +1,53 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+    lang="en"
+    metal:use-macro="context/prefs_main_template/macros/master"
+    i18n:domain="plone.app.onlineusers">
+
+<body>
+
+<div metal:fill-slot="prefs_configlet_content">
+
+      <div id="region-content" class="documentEditable">
+
+        <div class="documentContent" id="content">
+            <a name="documentContent"></a>
+
+            <div metal:use-macro="context/global_statusmessage/macros/portal_message">Portal status message</div>
+
+            <div class="configlet" tal:define="
+                portal       python: context.portal_url.getPortalObject();
+                session_data python: portal.aq_parent.temp_folder.session_data;
+                keys         python: session_data.keys();
+            ">
+
+                <h1 class="documentFirstHeading">Users online</h1>
+
+                <a href="" class="link-parent" tal:attributes="href string:${portal_url}/plone_control_panel" i18n:translate="label_up_to_plone_setup">Up to Site Setup</a>
+
+                <h4>users online: <tal: replace="python:len(keys)" /></h4>
+
+                <dl tal:repeat="key keys">
+                    <tal:session define="
+                        session python: session_data[key];
+                        hash    python: session.has_key('plone.app.onlineusers') and session.get('plone.app.onlineusers') or False;
+                    ">
+                        <dt tal:condition="hash" tal:content="hash/name"></dt>
+                        <dt tal:condition="not:hash">No user-hash: <tal: replace="key" /></dt>
+                        <dd tal:condition="hash">
+                            <div><strong>url:</strong><span tal:content="hash/url"></span></div>
+                            <div><strong>date:</strong><span tal:content="hash/date"></span></div>
+                            <div><strong>agent:</strong><span tal:content="hash/agent"></span></div>
+                        </dd>
+                    </tal:session>
+                </dl>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
